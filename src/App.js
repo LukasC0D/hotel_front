@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { AuthProvider } from './components/AuthContext';
 import Countries from './components/country/Countries';
@@ -8,6 +8,7 @@ import Home from './components/Home';
 import Hotel from './components/hotel/Hotel';
 import Hotels from './components/hotel/Hotels';
 import Login from './components/Login';
+import Approve from './components/order/Approve';
 import Order from './components/order/Order';
 import Orders from './components/order/Orders';
 import Register from './components/Register';
@@ -20,6 +21,7 @@ function App() {
         <Header />
         <div className="container py-3">
           <Routes>
+            <Route path="/" element={<Navigate replace to="/home" />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register />} />
@@ -31,6 +33,7 @@ function App() {
             <Route path="/hotel/create" element={<Hotel />} />
             <Route path="/order/:id" element={<Order />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/approve/:id" element={<Approve />} />
           </Routes>
         </div>
       </AuthProvider>

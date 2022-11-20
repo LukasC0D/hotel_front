@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
-import Hotel from '../hotel/Hotel';
 
 const Orders = () => {
     const navigate = useNavigate();
@@ -15,7 +14,7 @@ const Orders = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth.getToken()}`,
       };
-  
+      
     useEffect(() => {
       fetch(url)
         .then((res) => res.json())
@@ -51,7 +50,7 @@ const Orders = () => {
         }
       );
     };
-  
+
     if (!isLoaded) {
       return <div>Loading...</div>;
     } else if (error) {
@@ -64,6 +63,7 @@ const Orders = () => {
               <th>Client name</th>
               <th>Order id</th>
               <th>Hotel id</th>
+              <th>Status</th>
               <th>
                 <span className="float-end mx-1">Actions</span>
               </th>
@@ -71,25 +71,26 @@ const Orders = () => {
           </thead>
           <tbody>
             {order.map((post) => (
-              <tr key={order}>
+              <tr key={post.id}>
                 <td className="col-lg-3">{post.name}</td>
                 <td>{post.id}</td>
                 <td>{post.hotel_id}</td>
+                <td>{post.approved === 0 ? 'Nepatvirtintas' : 'Patvirtintas'}</td>
                 <td className="col-lg-2">
                 {auth.getRole() === 2 ? (
                   <>
                     <button
-                      onClick={(e) => navigate(`/restaurants/${post.id}`)}
+                      onClick={(e) => navigate(`/approve/${post.id}`)}
                       className="float-end btn btn-warning mx-1"
                     >
                       Aproove
                     </button>
                     <button
-                      onClick={(e) => deletePost(post.id, e)}
+                      onClick={(e) => deletePost(post.id)}
                       className="float-end btn btn-danger mx-1"
                     >
                       Delete
-                    </button>
+                    </button> 
                   </>
                 ) : (
                   ""
@@ -102,16 +103,6 @@ const Orders = () => {
                 colSpan="6"
                 className="border border-3 border-start-0 border-bottom-0 border-end-0"
               >
-               {/* {auth.getRole() === 2 ? (
-                <button
-                  onClick={(e) => navigate(`/restaurants/create`)}
-                  className="btn btn btn-success float-end mx-1"
-                >
-                  Add new Restaurant
-                </button>
-              ) : (
-                ""
-              )} */}
               </td>
             </tr>
           </tbody>

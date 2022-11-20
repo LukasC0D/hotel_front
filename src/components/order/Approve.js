@@ -1,33 +1,32 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
-import { AuthContext } from '../AuthContext';
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 
-const Order = () => {
-    const auth = useContext(AuthContext);
+const Approve = () => {
+    const navigate = useNavigate();
     let { id } = useParams();
+    const auth = useContext(AuthContext);
     const [status, setStatus] = useState(null);
     const [initialLoadError, setInitialLoadError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [item, setItem] = useState({});
-    const [order, setOrder] = useState();
-    const hs = { 
-
+    const [post, setPost] = useState([]);
+    const url = `http://localhost:8000/api/order`;
+    const hs = {
       Accept: "application/json",
-     "Content-Type": "application/json", 
-     Authorization: `Bearer ${auth.getToken()}`
-     };
-
-    const url = `http://localhost:8000/api/hotel`;
-    const navigate = useNavigate();
-    
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth.getToken()}`,
+    };
+  
     useEffect(() => {
       if (id)
         fetch(`${url}/${id}`)
           .then((res) => res.json())
           .then(
             (res) => {
-              setItem(res);
+              setPost(res);
               setIsLoaded(true);
+              // setApprove(res.data.message)
+                // console.log(res.data.message)
             },
             (err) => {
               setInitialLoadError(err);
@@ -37,19 +36,20 @@ const Order = () => {
       else setIsLoaded(true);
     }, [id, url]);
   
-    const createItem = (e) => {
+    const updateItem = (e) => {
+
       e.preventDefault();
-      fetch(url + "/addorder" , {
-        method: "POST",
+
+      fetch(`${url}/${id}`, {
+        method: "PUT",
         headers: hs,
-        body: JSON.stringify({ 
-            name: order, 
-            hotel_id: id,}),
+        body: JSON.stringify(post),
       }).then(
         (res) => {
-          if (res.status === 200 || res.status === 201) {
+          if (res.status === 200) {
             setStatus({ message: res.statusText });
             navigate("/orders");
+            
           } else if (res.status === 401) {
             setStatus({ message: res.statusText });
           } else if (res.status === 422) {
@@ -61,7 +61,7 @@ const Order = () => {
         }
       );
     };
-
+  
     if (!isLoaded) {
       return <div>Loading...</div>;
     } else if (initialLoadError) {
@@ -69,37 +69,33 @@ const Order = () => {
     } else {
       return (
         <div className="d-flex aligns-items-center justify-content-center">
-          <div className="card w-50">  
-            <div className="card-header">{`Hotel  id: ${id} make order`}</div>
-            <div className="card-body">    
-              <form onSubmit={(e) => createItem(e)}>
+          <div className="card w-50">
+            <div className="card-header">
+              Order {id ? `nr: ${id} approve` : `creation`} Sign Below
+            </div>
+            <div className="card-body">
+              <form onSubmit={(e) => (updateItem(e))}>
                 <div className="my-2 text-danger">
                   {status === null ? "" : status.message}
                 </div>
                 <div className="form-group d-grid gap-2">
-                  <label>Hotel name</label>
-                  <input
+                  {/* <input
                     className="form-control"
-                    value={item.name ?? "New name"}
-                    disabled
-                  />
-                  <label>Hotel price</label>
-                  <input
-                    className="form-control"
-                    value={item.price ?? "New name"}
-                    disabled
-                  />     
-                  <label>Enter your name</label>
-                  <input
-                    className="form-control"
-                    onChange={(e) => setOrder(e.target.value)}
-                    type="text"           
-                  />
-                  <input
+                    onChange={(e) => setPost({ ...post, approved: e.target.value })}
+                    onFocus={() => post.approved ?? setPost({ ...post, approved: "" })}
+                    value={post.approved ?? "Sign here"}            
+                  /> */}
+                   {/* <button onClick={() => updateItem(post.approved)}>Patvirtinti</button> */}
+                   <input
                     className="btn btn-primary"
                     type="submit"
-                    value="Confirm Order"
+                    value="Submit"
                   />
+                   <button className="btn btn-success" onClick={() => updateItem(post.approved)}>
+                      {post.approved === 0 ? 'Approve' : 'cancel'}
+                    </button>
+
+                 
                 </div>
               </form>
             </div>
@@ -109,4 +105,4 @@ const Order = () => {
     }
 }
 
-export default Order;
+export default Approve

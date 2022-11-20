@@ -66,9 +66,9 @@ const Hotels = () => {
                 <div className="card" style={{ width: "17rem" }} 
                     key={hotel.id}>
                   <img
-                    src={hotel.photo}
+                    src={hotel.image}
                     className="card-img-top"
-                    alt={hotel.name}
+                    alt={hotel.image}
                     style={{ width: "270px", height: "180px" }}
                   />
                   <div className="card-body">
@@ -76,10 +76,6 @@ const Hotels = () => {
                     <p className="card-text">
                       <b>Price:</b> {hotel.price} eur
                     </p>
-                    {/* <p className="card-text">
-                      <b>Rating: </b>
-                      {hotel.rating}
-                    </p> */}
                     <p className="card-text">
                       <b>Time (Travel): </b>
                       {hotel.travel_time}
