@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from "./AuthContext";
 
 const Register = () => {
-    const url = `http://localhost:8000/api/register`;
+	const url = `http://localhost:8000/api/register`;
 	const hs = { Accept: "application/json", "Content-Type": "application/json" };
 	const [userInfo, setUserInfo] = useState({ name: "", email: "", password: "", password_confirmation: "" });
 	const [err, setErr] = useState(null);
 	const navigate = useNavigate();
 	const auth = useContext(AuthContext);
 
-    const register = (e) => {
+	const register = (e) => {
 		e.preventDefault();
 		fetch(url, { method: "POST", headers: hs, body: JSON.stringify(userInfo) })
 			.then(
@@ -25,8 +25,8 @@ const Register = () => {
 				navigate("/home");
 			});
 	};
-  return (
-    <div className="d-flex aligns-items-center justify-content-center">
+	return (
+		<div className="d-flex aligns-items-center justify-content-center">
 			<div className="card w-50">
 				<div className="card-header">Register</div>
 				<div className="card-body">
@@ -68,7 +68,7 @@ const Register = () => {
 				</div>
 			</div>
 		</div>
-  )
+	)
 };
 
 export default Register;

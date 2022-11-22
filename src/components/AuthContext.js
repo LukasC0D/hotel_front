@@ -32,18 +32,18 @@ export const AuthProvider = ({ children }) => {
 				setToken(null);
 				Navigate("/login");
 			},
-			(err) => {}
+			(err) => { }
 		);
 	};
 
 	const getUser = () => user;
-    const getToken = () => token;
-    const getRole = () => user.role;
-    const getUserId = () => user.id;
-    const isLoggedin = () => (user ? true : false);
+	const getToken = () => token;
+	const getRole = () => user.role;
+	const getUserId = () => user.id;
+	const isLoggedin = () => (user ? true : false);
 
 	return (
 		<AuthContext.Provider value={{ login, isLoggedin, logout, getUser, getToken, getRole, getUserId }}>
-            {children}</AuthContext.Provider>
+			{children}</AuthContext.Provider>
 	);
 };

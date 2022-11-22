@@ -8,7 +8,6 @@ import Home from './components/Home';
 import Hotel from './components/hotel/Hotel';
 import Hotels from './components/hotel/Hotels';
 import Login from './components/Login';
-import Approve from './components/order/Approve';
 import Order from './components/order/Order';
 import Orders from './components/order/Orders';
 import Register from './components/Register';
@@ -33,18 +32,14 @@ function App() {
             <Route path="/hotel/create" element={<Hotel />} />
             <Route path="/order/:id" element={<Order />} />
             <Route path="/orders" element={<Orders />} />
-            <Route path="/approve/:id" element={<Approve />} />
           </Routes>
         </div>
       </AuthProvider>
     </BrowserRouter>
-
 {/* <div>
 <img src={logo} className="flex-center" alt="logo" />
 </div> */}
-
 </>
   );
 }
-
 export default App;

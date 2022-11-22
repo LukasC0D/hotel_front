@@ -1,18 +1,9 @@
-/* .hover{
-    background-color: rgb(197, 24, 24);
-    border-radius: 8px;
-    opacity: 0.9;
-    color: white !important;
-} */
-/* .navbar:hover{
-    background-color: rgb(105, 105, 105) !important;
-} */
 .nav-link:hover{
     color: rgb(146, 0, 0) !important;
 }
-.bg-secondary{
-    background: aqua !important;
+.active{
+    color: aqua !important;
 }
 .navbar{
-    background-color: rgb(163, 163, 163) !important;
+    background-color: rgb(179, 179, 179) !important;
 }

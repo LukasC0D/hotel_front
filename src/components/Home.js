@@ -6,24 +6,24 @@ const Home = () => {
   return (
     <>
       {!auth.isLoggedin() ? (
-          <>
+        <>
           <h3 className='text-center pt-5 text-info'>
-            <div>Welcome to hotels, please log in.</div>
-          </h3>        
+            <div>Welcome To Hotel </div><br /><div> Please Log In First</div>
+          </h3>
+        </>
+      ) : (
+        auth.getRole() === 2 ? (
+          <>
+            <h1 className='text-center pt-5 text-success'>
+              <div>Admin - Home Page</div>
+            </h1>
           </>
-          ) : (
-          auth.getRole() === 2 ? (
-            <>
-          <h1 className='text-center pt-5 text-success'>
-            <div>Welcome back Boss!!!</div>
-          </h1>
-            </>
-          ) : (
+        ) : (
           <h1 className='text-center pt-5 text-primary'>
-            <div>Welcome dear Client.</div>
+            <div>Client - Home Page</div>
           </h1>
-          )
         )
+      )
       }
     </>
   )
